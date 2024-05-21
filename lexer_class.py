@@ -1,3 +1,6 @@
+from utils.lex.TokenClass import Token
+from utils.lex.TokenKinds import Token_kind 
+
 class Lexer:
 
     def __init__(self, in_content) -> None:
