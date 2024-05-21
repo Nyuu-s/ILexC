@@ -27,8 +27,8 @@ int main ()
 
     if( a >= b)
     {
-        if(_Rreadk(stuff, stufdf, stuuf)){
-            _Readn(my, var, is, strong);
+        if(_Rreadk(stuff, stufdf, stuuf) ){
+            _Rreadn(my, var, is, strong);
         }
     }    
 

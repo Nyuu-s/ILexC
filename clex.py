@@ -2,7 +2,7 @@ import enum
 from queue import LifoQueue
 from utils.lex.TokenKinds import Token_kind 
 from utils.lex.TokenClass import Token
-from utils.lex.TokenTables import LITERAL_TOKEN, KEYWORDS_TOKEN, COMPOSED_OPERATORS_TOKEN, IBM_KEYWORDS_TOKEN
+from utils.lex.TokenTables import LITERAL_TOKEN, KEYWORDS_TOKEN, COMPOSED_OPERATORS_TOKEN, IBM_KEYWORDS_TOKEN, OPERARTORS_TOKEN
 
 in_path = r"E:\Projects\python\ILexC\in\test.c"
 
@@ -21,6 +21,9 @@ def is_symbol(x:str):
 
 def is_literal(x:str):
     return LITERAL_TOKEN.get(x, False) != False
+
+def is_operator(x:str):
+    return OPERARTORS_TOKEN.get(x, False) != False
 
 def is_string_start_or_end(x:str):
     return x == '"'
@@ -42,11 +45,17 @@ def tokenize(in_content: str, cursor: int):
     if cursor >= len(in_content):
         return (Token(Token_kind.TOKEN_END), cursor) 
 
-########## Operators 
+########## Literals
     if is_literal(in_content[cursor]):
         token = Token(LITERAL_TOKEN[in_content[cursor]], in_content[cursor])
         cursor += 1
-        while (cursor < len(in_content)-1) and is_literal(in_content[cursor]):
+        return (token, cursor)
+    
+########## Operators 
+    if is_operator(in_content[cursor]):
+        token = Token(OPERARTORS_TOKEN[in_content[cursor]], in_content[cursor])
+        cursor += 1
+        while (cursor < len(in_content)-1) and is_operator(in_content[cursor]):
             token.text += in_content[cursor]
             cursor += 1
         if (kind := COMPOSED_OPERATORS_TOKEN.get(token.text)) != None:
@@ -54,6 +63,7 @@ def tokenize(in_content: str, cursor: int):
         
         return (token, cursor)
 
+    
 ########## Strings
     if is_string_start_or_end(in_content[cursor]):
         token = Token(Token_kind.TOKEN_STRING, in_content[cursor])
@@ -68,7 +78,7 @@ def tokenize(in_content: str, cursor: int):
             # multiline single string
             token.kind = Token_kind.TOKEN_UNSUPPORTED
             cursor += 1
-            return (token, cursor)
+
         return (token, cursor)
 
 ########## Numbers
@@ -107,6 +117,10 @@ def tokenize(in_content: str, cursor: int):
         # check if symbol is a reserved keyword 
         if (statement := KEYWORDS_TOKEN.get(token.text, token.kind)) != token.kind:
             token.kind = statement
+        # check if symbol is a ibm keyword 
+        elif (keyword := IBM_KEYWORDS_TOKEN.get(token.text, token.kind)) != token.kind:
+            token.kind = keyword
+        
         return (token, cursor)  
 
 ######### Pointers
@@ -140,7 +154,7 @@ with open(in_path, "r",encoding="utf-8") as f:
             tokens.append(cur_token)
     
     for token in tokens:
-        if token.kind == Token_kind.TOKEN_UNSUPPORTED:
+        if token.kind != Token_kind.TOKEN_UNSUPPORTED:
             print(token.text, f"({token.kind.value})")
           
        

@@ -1,4 +1,4 @@
-from TokenKinds import Token_kind
+from utils.lex.TokenKinds import Token_kind
 
 LITERAL_TOKEN = {
     "(": Token_kind.TOKEN_OPEN_PAR,
@@ -7,6 +7,9 @@ LITERAL_TOKEN = {
     "}": Token_kind.TOKEN_CLOSE_CURLY,
     ";": Token_kind.TOKEN_SEMICOLON,
     "!": Token_kind.TOKEN_NOT,
+}
+
+OPERARTORS_TOKEN = {
     "<": Token_kind.TOKEN_LT,
     ">": Token_kind.TOKEN_GT,
     ".": Token_kind.TOKEN_DOT,
@@ -26,7 +29,7 @@ KEYWORDS_TOKEN = {
     "for": Token_kind.TOKEN_FOR,
     "if": Token_kind.TOKEN_IF,
     "while": Token_kind.TOKEN_WHILE,
-    "do": Token_kind.TOKEN_DO 
+    "do": Token_kind.TOKEN_DO
 }
 
 
@@ -39,5 +42,6 @@ IBM_KEYWORDS_TOKEN = {
     "_Rreadp": Token_kind.TOKEN_IBM_READ_PRIOR,
     "_Rwrite": Token_kind.TOKEN_IBM_R_WRITE,
     "_Rdelete": Token_kind.TOKEN_IBM_R_DELETE,
-    "_Rupdate": Token_kind.TOKEN_IBM_R_UPDATE
+    "_Rupdate": Token_kind.TOKEN_IBM_R_UPDATE,
+    "QUSCRTUS": Token_kind.TOKEN_IBM_QUSCRTUS
 }
