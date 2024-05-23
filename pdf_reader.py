@@ -9,7 +9,6 @@ c_functions = []
 
 for frame in table_reader:
     for row in frame.to_dict('records'):
-        print(row)
         func = str(row["Function"]).replace('\r', '')
         desc = str(row["Description"]).replace('\r', ' ')
 
@@ -20,13 +19,12 @@ for frame in table_reader:
             
             c_functions.append(tuple)
 
-print(c_functions)
 #add token kinds
 with open("./utils/lex/TokenKinds.py", 'r', encoding="utf-8") as file:
     content = file.read()
     section = "### IBM RELATED ###"
 
-    kinds = section + '\n' + "\n".join([f'\tTOKEN_IBM_{func[0].strip('()').upper()} = "{func[1]}"' for func in c_functions])
+    kinds = "\n".join([f'\tTOKEN_IBM_{func[0].strip('()').upper()} = "{func[1]}"' for func in c_functions])
     #kinds = section + '\n' + "\n".join([f'\tTOKEN_C_{func[0].strip('()').upper()} = "{func[1]}"' for func in c_functions])
     content = content.replace(section, kinds )
     with open("./utils/lex/parsedKinds.txt", 'w', encoding='utf-8') as out:
@@ -34,14 +32,18 @@ with open("./utils/lex/TokenKinds.py", 'r', encoding="utf-8") as file:
     
 
 # add tables
-with open("./utils/lex/TokenTables.py", 'r+', encoding="utf-8") as file:
+with open("./utils/lex/TokenTables.py", 'r', encoding="utf-8") as file:
     content = file.read()
     table_name = "IBM_KEYWORDS_TOKEN"
     template = """
 {tableName} = {{
-    {funcName}: 
+{tableContent}
 }}
 """
+    tokens = "\n".join([f'\t"{func[0]}": Token_Kinds.TOKEN_IBM_{func[0].strip('()').upper()}' for func in c_functions])
+    content = template.format(tableName=table_name, tableContent=tokens)
+    with open("./utils/lex/parsedTokenTables.txt", 'w', encoding='utf-8') as out:
+        out.write(content)
 
 # number_of_pages = len(reader.pages)
 
