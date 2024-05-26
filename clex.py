@@ -2,7 +2,7 @@ import enum
 from queue import LifoQueue
 from utils.lex.TokenKinds import Token_kind 
 from utils.lex.TokenClass import Token
-from utils.lex.TokenTables import LITERAL_TOKEN, KEYWORDS_TOKEN, COMPOSED_OPERATORS_TOKEN, IBM_KEYWORDS_TOKEN, OPERARTORS_TOKEN
+from utils.lex.TokenTables import LITERAL_TOKEN, KEYWORDS_TOKEN, COMPOSED_OPERATORS_TOKEN, IBM_FUNCTION_TOKEN, OPERARTORS_TOKEN, C_FUNCTION_TOKEN
 
 in_path = r"E:\Projects\python\ILexC\in\test.c"
 
@@ -39,6 +39,18 @@ def eat_line(token: Token, cursor, in_content) -> tuple[Token, int]:
         token.text += in_content[cursor]
         cursor += 1
     return (token, cursor)
+
+def identify_symbol(symbol: str) -> Token_kind:
+    if (statement := KEYWORDS_TOKEN.get(symbol, None)) != None:
+        return statement
+     
+    if (function := IBM_FUNCTION_TOKEN.get(symbol, None)) != None:
+        return function
+    
+    if (function := C_FUNCTION_TOKEN.get(symbol, None)) != None:
+        return function
+
+    return Token_kind.TOKEN_SYMBOL
 
 def tokenize(in_content: str, cursor: int):
 
@@ -114,12 +126,9 @@ def tokenize(in_content: str, cursor: int):
         while(cursor < len(in_content)-1 and is_symbol(in_content[cursor])):
             token.text += in_content[cursor]
             cursor += 1
-        # check if symbol is a reserved keyword 
-        if (statement := KEYWORDS_TOKEN.get(token.text, token.kind)) != token.kind:
-            token.kind = statement
-        # check if symbol is a ibm keyword 
-        elif (keyword := IBM_KEYWORDS_TOKEN.get(token.text, token.kind)) != token.kind:
-            token.kind = keyword
+
+        token.kind = identify_symbol(token.text)
+    
         
         return (token, cursor)  
 
@@ -157,7 +166,7 @@ with open(in_path, "r",encoding="utf-8") as f:
         if token.kind != Token_kind.TOKEN_UNSUPPORTED:
             print(token.text, f"({token.kind.value})")
           
-       
+    
 # with open(in_path, "r",encoding="utf-8") as f:
 #     lexer = Lexer(f.read().strip())
 #     while not lexer.is_at_end():

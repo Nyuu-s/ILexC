@@ -45,6 +45,7 @@ void func1(void)
     "Line 2";
     int a = 0xFF;
     float b = 0.5F;
+    char *auto = dsf; 
     QUSCRTUS("MYSPACE QTEMP ",
         "MYSPACE ",
         CREATION_SIZE,
@@ -63,5 +64,13 @@ void func1(void)
 
 void func2(int var, int num)
 {
-
+  memcpy(space_name, "ADOPTS    QTEMP     ", 20);
+  space_init = 0x00;
+  memcpy(mbr_list, "OBJP0200", 8);
+  memcpy(rjobd_fmt, "OBJD0100", 8);
+  memcpy(space_type, "*USRSPC   ", 10);
+  memcpy(ext_attr, "QSYLOBJP  ", 10);
+  memcpy(space_auth, "*ALL      ", 10);
+  memcpy(space_rep, "*YES      ", 10);
+  memcpy(space_dmn, "*USER     ", 10);
 }

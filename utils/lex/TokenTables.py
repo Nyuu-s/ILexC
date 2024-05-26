@@ -29,8 +29,38 @@ KEYWORDS_TOKEN = {
     "for": Token_kind.TOKEN_FOR,
     "if": Token_kind.TOKEN_IF,
     "while": Token_kind.TOKEN_WHILE,
-    "do": Token_kind.TOKEN_DO
+    "do": Token_kind.TOKEN_DO,
+    "int": Token_kind.TOKEN_TYPE_INT,
+    "void": Token_kind.TOKEN_TYPE_VOID,
+    "char": Token_kind.TOKEN_TYPE_CHAR,
+    "else": Token_kind.TOKEN_ELSE,
+    "break": Token_kind.TOKEN_BREAK,
+    "enum": Token_kind.TOKEN_ENUM,
+    "register": Token_kind.TOKEN_REGISTER, 
+	"typedef": Token_kind.TOKEN_TYPEDEF,
+	"case": Token_kind.TOKEN_CASE,
+	"extern": Token_kind.TOKEN_EXTERN,
+	"return": Token_kind.TOKEN_RETURN,
+	"union": Token_kind.TOKEN_UNION,
+	"char": Token_kind.TOKEN_TYPE_CHAR,
+	"float": Token_kind.TOKEN_TYPE_FLOAT,
+	"short": Token_kind.TOKEN_TYPE_SHORT,
+	"void": Token_kind.TOKEN_TYPE_VOID,
+	"unsigned": Token_kind.TOKEN_UNSIGNED,
+	"const": Token_kind.TOKEN_CONST,
+	"signed": Token_kind.TOKEN_SIGNED,
+	"continue": Token_kind.TOKEN_CONTINUE,
+	"goto": Token_kind.TOKEN_GOTO,
+	"sizeof": Token_kind.TOKEN_SIZEOF,
+	"volatile": Token_kind.TOKEN_VOLATILE,
+	"default": Token_kind.TOKEN_DEFAULT,
+	"static": Token_kind.TOKEN_STATIC,
+	"struct": Token_kind.TOKEN_STRUCT,
+	"_Packed": Token_kind.TOKEN_PACKED,
+	"double": Token_kind.TOKEN_TYPE_DOUBLE,
+	"auto": Token_kind.TOKEN_AUTO
 }
+
 
 
 C_FUNCTION_TOKEN = {
