@@ -1,7 +1,7 @@
 import enum
 from queue import LifoQueue
 from utils.lex.TokenKinds import Token_kind 
-from utils.lex.TokenClass import Token
+from utils.lex.TokenClass import Token, TokenCategory
 from utils.lex.TokenTables import LITERAL_TOKEN, KEYWORDS_TOKEN, COMPOSED_OPERATORS_TOKEN, IBM_FUNCTION_TOKEN, OPERARTORS_TOKEN, C_FUNCTION_TOKEN
 
 in_path = r"E:\Projects\python\ILexC\in\test.c"
@@ -40,17 +40,18 @@ def eat_line(token: Token, cursor, in_content) -> tuple[Token, int]:
         cursor += 1
     return (token, cursor)
 
-def identify_symbol(symbol: str) -> Token_kind:
+def identify_symbol(symbol: str) -> tuple[Token_kind, TokenCategory]:
+   
     if (statement := KEYWORDS_TOKEN.get(symbol, None)) != None:
-        return statement
+        return (statement, TokenCategory.KEYWORDS)
      
     if (function := IBM_FUNCTION_TOKEN.get(symbol, None)) != None:
-        return function
+        return (function, TokenCategory.IBM_FUNC)
     
     if (function := C_FUNCTION_TOKEN.get(symbol, None)) != None:
-        return function
+        return (function, TokenCategory.C_FUNC)
 
-    return Token_kind.TOKEN_SYMBOL
+    return (Token_kind.TOKEN_SYMBOL, TokenCategory.UNKNOWN)
 
 def tokenize(in_content: str, cursor: int):
 
@@ -117,6 +118,7 @@ def tokenize(in_content: str, cursor: int):
             if not token.text.endswith("\\"):
                 break
             cursor += 1
+        token.category = TokenCategory.PREPRO
         return (token, cursor)
     
 ########## Symbols
@@ -127,7 +129,7 @@ def tokenize(in_content: str, cursor: int):
             token.text += in_content[cursor]
             cursor += 1
 
-        token.kind = identify_symbol(token.text)
+        token.kind, token.category = identify_symbol(token.text)
     
         
         return (token, cursor)  

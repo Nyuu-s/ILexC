@@ -5,6 +5,10 @@ class TokenCategory(Enum):
     C_FUNC = ['TOKEN_C_']
     IBM_FUNC = ['TOKEN_IBM']
     PREPRO = ['TOKEN_PREPRO']
+    KEYWORDS = ['TOKEN_KW_']
+
+    UNKNOWN = ['TOKEN_UNSPPORTED']
+
 
 class Token:
 
@@ -16,7 +20,9 @@ class Token:
             if cat in self.kind.name:
                 return True
         return False
+    
 
     def __init__(self, kind, text = "") -> None:
         self.kind: Token_kind = kind
         self.text: str = text
+        self.category = None
