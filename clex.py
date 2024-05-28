@@ -148,24 +148,26 @@ def tokenize(in_content: str, cursor: int):
     return (token, cursor)
 
 
-# if not using classes   
-tokens: list[Token] = []
-with open(in_path, "r",encoding="utf-8") as f:
-    content = f.read().strip()
-    _cursor = 0
+# if not using classes  
+def lex():
+    tokens: list[Token] = []
+    with open(in_path, "r",encoding="utf-8") as f:
+        content = f.read().strip()
+        _cursor = 0
 
-    while _cursor < len(content):
-        cur_token, _cursor = tokenize(content, _cursor)
-        if(cur_token != None):
-            if cur_token.kind == Token_kind.TOKEN_UNSUPPORTED and tokens[len(tokens)-1].kind == Token_kind.TOKEN_UNSUPPORTED:
-                tokens[len(tokens)-1].text += cur_token.text
-                continue
-            tokens.append(cur_token)
-    
-    for token in tokens:
-        if token.kind != Token_kind.TOKEN_UNSUPPORTED:
-            print(token.text, f"({token.kind.value})")
-          
+        while _cursor < len(content):
+            cur_token, _cursor = tokenize(content, _cursor)
+            if(cur_token != None):
+                if cur_token.kind == Token_kind.TOKEN_UNSUPPORTED and tokens[len(tokens)-1].kind == Token_kind.TOKEN_UNSUPPORTED:
+                    tokens[len(tokens)-1].text += cur_token.text
+                    continue
+                tokens.append(cur_token)
+        
+        for token in tokens:
+            if token.kind != Token_kind.TOKEN_UNSUPPORTED:
+                print(token.text, f"({token.kind.value})")
+    print("###### END LEXING ########")
+    return tokens          
     
 # with open(in_path, "r",encoding="utf-8") as f:
 #     lexer = Lexer(f.read().strip())
