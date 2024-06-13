@@ -6,12 +6,11 @@
 #include <QSYSINC/H/QUSCRTUS>
 #include "ActiveDS.h";
 
-
 #define CREATION_SIZE 65536
 #define fghfhj \
 ghjhgjghj
 
-#pragma once;
+#pragma map_inc_once;
 
 void func1(void);
 void func2(int, int);

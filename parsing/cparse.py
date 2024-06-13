@@ -8,30 +8,30 @@ from utils.lex.TokenClass import Token, TokenCategory
 from utils.lex.TokenKinds import Token_kind
 from utils.lex.clex import lex
 from utils.parse.TransitionTable import Transitions, States
-from parsing.AST_class import AST, NODE_TYPE
+from AST_class import AST, NODE_TYPE
 
 def process_symbol(token: Token):
     #detect function definitions or uses 
     pass
 class CParse():
-
-
-
-    
     def __init__(self) -> None:
         self.functions_definitions = []
-        self.current_token_pile = []
+        self.token_pile = []
         self.current_state = States.DEFAULT
 
     def parse_tokens(self, tokens: list):
+        print("##### START BUILDING AST #####")
         tree = AST()
-        current_token = tokens.pop(0)
-        for i in range(len(tokens)-1):
-            match current_token.kind:
-                case Token_kind.TOKEN_PREPROC:  
+        i = 0
+        current_token = tokens.pop(i)  
+        while len(tokens) > 0:
+            if current_token.category == TokenCategory.PREPRO:
+                    print("cat: ", current_token.category)
                     tree.root["children"].append(tree.PreprocessorStatement(current_token))
-                case Token_kind.TOKEN_SYMBOL:
+            elif current_token.category == TokenCategory.KEYWORDS:
+                    
                     pass
+    
             current_token = tokens.pop(i)
         print(tree.root)
         
