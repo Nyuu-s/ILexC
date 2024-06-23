@@ -26,11 +26,12 @@ class CParse():
         current_token = tokens.pop(i)  
         while len(tokens) > 0:
             if current_token.category == TokenCategory.PREPRO:
-                    print("cat: ", current_token.category)
                     tree.root["children"].append(tree.PreprocessorStatement(current_token))
             elif current_token.category == TokenCategory.KEYWORDS:
-                    
-                    pass
+                self.token_pile.append(current_token)
+                tree.root["children"].append(tree.KeyWordIdentifying(current_token))
+                current_token = tokens.pop(i)     
+            
     
             current_token = tokens.pop(i)
         print(tree.root)

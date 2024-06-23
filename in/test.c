@@ -5,14 +5,14 @@
 #include <QSYSINC/MIH/MATS>
 #include <QSYSINC/H/QUSCRTUS>
 #include "ActiveDS.h";
-
+#pragma mapinc(somestuff, some weaird things)
 #define CREATION_SIZE 65536
 #define fghfhj \
 ghjhgjghj
 
 #pragma map_inc_once;
 
-void func1(void);
+void func1(int);
 void func2(int, int);
 
 int main ()
@@ -29,12 +29,13 @@ int main ()
         if(_Rreadk(stuff, stufdf, stuuf) ){
             _Rreadn(my, var, is, strong);
         }
-    }    
+    }  
+
 
 }
 
 
-void func1(void)
+void func1(int te)
 {
     _SPC_Template_T space_t;
     _SYSPTR ptr_to_space;

@@ -4,6 +4,8 @@ Program:
 
 Statements:
 | PreprocessorStatement
+| FunctionDeclaration
+| FunctionDefinition
 ;
 
 PreprocessorStatement:

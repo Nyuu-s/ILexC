@@ -3,11 +3,12 @@ from utils.lex.TokenClass import Token
 from enum import Enum
 
 class NODE_TYPE(Enum):
-    PROGRAM = "program",
-    PREPROCESSOR_STATEMENT = "PreprocessorStatemen",
-    INCLUDE_DIRECTIVE = "IncludeDirective",
-    DEFINE_DIRECTIVE = "DefineDirective",
+    PROGRAM = "program"
+    PREPROCESSOR_STATEMENT = "PreprocessorStatemen"
+    INCLUDE_DIRECTIVE = "IncludeDirective"
+    DEFINE_DIRECTIVE = "DefineDirective"
     PRAGMA_DIRECTIVE = "PragmaDirective"
+    PRAGMA_MAPINC = "PragmaMapIncDirective"
     INCLUDE_FILE = "IncludeFile"
 
     UNRECOGNIZED = "Not implemented yet"
@@ -48,15 +49,17 @@ class AST():
     def PragmaDirective(self, token: Token):
         pragma = "#pragma"
         split = token.text.split(pragma)
-        print(split, token.text)
+        
         node = self.__helper_create_node(NODE_TYPE.PRAGMA_DIRECTIVE, pragma )
-        match split[1].strip().strip(';'):
-            case 'once': 
-                node = self.__helper_create_node(NODE_TYPE.PRAGMA_DIRECTIVE, 'once')
-            case _:
-                node["children"].append(self.__helper_create_node(NODE_TYPE.UNRECOGNIZED, token.text))
+        if 'once' in split[1]: 
+            node = self.__helper_create_node(NODE_TYPE.PRAGMA_DIRECTIVE, 'once')
+        elif 'mapinc' in split[1]:
+            node["children"].append(self.__helper_create_node(NODE_TYPE.PRAGMA_MAPINC, split[1]))
+        else:
+            node["children"].append(self.__helper_create_node(NODE_TYPE.UNRECOGNIZED, token.text))
             
         return node
+    
     def PreprocessorStatement(self, token: Token):
         node = self.__helper_create_node(NODE_TYPE.PREPROCESSOR_STATEMENT, token.text)
 
@@ -69,5 +72,8 @@ class AST():
         else:
              node["children"].append(self.__helper_create_node(NODE_TYPE.UNRECOGNIZED, token.text))
         return node
+    
+    def KeyWordIdentifying(self, token):
+        pass
         
     
