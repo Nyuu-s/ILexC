@@ -39,6 +39,7 @@ def handle_functions(node: Cursor):
             for param in def_cursor.get_children():
                 if param.kind == CursorKind.PARM_DECL:
                     functions_map[decl_id].append((param.spelling, param.type.spelling))
+                    
 # Function to visit nodes in the AST
 def visit(node: Cursor):
 
