@@ -4,8 +4,12 @@ Program:
 
 Statements:
 | PreprocessorStatement
+| FunctionDeclaration
 ;
-
+FunctionDeclaration:
+  ReservedKeyword
+| Keyword 
+;
 PreprocessorStatement:
 | IncludeStatement
 | DefineStatement
@@ -14,10 +18,11 @@ PreprocessorStatement:
 ;
 
 IncludeStatement:
-| Symbol
+| Expression
 ;
 
 DefineStatement:
+| Expression
 ;
 
 
