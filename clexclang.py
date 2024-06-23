@@ -1,5 +1,5 @@
 from clang.cindex import Index, Cursor, CursorKind, TranslationUnit
-
+from generation.JavaGenerator import Generator
 
 # Initialize Clang index
 index = Index.create()
@@ -47,8 +47,9 @@ def visit(node: Cursor):
     if str(node.location.file) != source_file_path:
         return
     node_kind: CursorKind = node.kind
-    print(node.spelling, node_kind)
-
+    
+    handle_functions(node)
+    
     for child in node.get_children():
         visit(child)
 
@@ -56,4 +57,7 @@ def visit(node: Cursor):
 for node in translation_unit.cursor.walk_preorder():
    visit(node)
 
-print(functions_map)
+
+gen = Generator(functions_map)
+
+gen.class_context.write_to_file()

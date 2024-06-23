@@ -35,8 +35,9 @@ int main ()
 }
 
 
-void func1(int te)
+void func1(char* te)
 {
+    
     _SPC_Template_T space_t;
     _SYSPTR ptr_to_space;
     int error_code = 0;
