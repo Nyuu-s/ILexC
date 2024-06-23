@@ -5,7 +5,7 @@ from utils.lex.TokenKinds import Token_kind
 from utils.lex.TokenClass import Token, TokenCategory
 from utils.lex.TokenTables import LITERAL_TOKEN, KEYWORDS_TOKEN, COMPOSED_OPERATORS_TOKEN, IBM_FUNCTION_TOKEN, OPERARTORS_TOKEN, C_FUNCTION_TOKEN
 
-in_path = r"E:\Projects\python\ILexC\in\test.c"
+in_path = r"in\test.c"
 
 
 UNSUPPORTED_IGNORE_LIST = [
